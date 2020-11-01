@@ -6,6 +6,10 @@ branding:
   color: 'gray-dark'
 
 inputs:
+  skicka-config:
+    description: 'Content of `~/.skicka.config` created by the `skicka init` command'
+    required:  true
+
   skicka-tokencache-json:
     description: 'Content of `~/.skicka.tokencache.json` created by the `skicka` command'
     required: true
@@ -33,24 +37,14 @@ inputs:
     default: 'true'
     required: false
 
-  google-client-id:
-    description: Your Google Drive API client ID
-    required: false
-
-  google-client-secret:
-    description: Your Google Drive API client secret
-    required: false
-
-
 runs:
   using: docker
   image: Dockerfile
   env:
+    SKICKA_CONFIG: ${{ inputs.skicka-config }}
     SKICKA_TOKENCACHE_JSON: ${{ inputs.skicka-tokencache-json }}
     UPLOAD_FROM: ${{ inputs.upload-from }}
     UPLOAD_TO: ${{ inputs.upload-to }}
     DOWNLOAD_FROM: ${{ inputs.download-from }}
     DOWNLOAD_TO: ${{ inputs.download-to }}
     REMOVE_OUTDATED: ${{ inputs.remove-outdated }}
-    GOOGLE_CLIENT_ID: ${{ inputs.google-client-id }}
-    GOOGLE_CLIENT_SECRET: ${{ inputs.google-client-secret }}
